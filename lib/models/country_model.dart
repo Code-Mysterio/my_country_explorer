@@ -1,4 +1,4 @@
-class CountryModel {
+class AllCountriesModel {
   Name? name;
   List<String>? tld;
   String? cca2;
@@ -33,7 +33,7 @@ class CountryModel {
   CapitalInfo? capitalInfo;
   PostalCode? postalCode;
 
-  CountryModel(
+  AllCountriesModel(
       {this.name,
         this.tld,
         this.cca2,
@@ -68,7 +68,7 @@ class CountryModel {
         this.capitalInfo,
         this.postalCode});
 
-  CountryModel.fromJson(Map<String, dynamic> json) {
+  AllCountriesModel.fromJson(Map<String, dynamic> json) {
     name = json['name'] != null ? new Name.fromJson(json['name']) : null;
     // tld = json['tld'].cast<String>();
     tld = json['tld'] == null? []: List.from(json['tld'].map((x)=>x));

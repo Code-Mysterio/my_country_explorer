@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:my_country_explorer/view_models/home_page_view_model.dart';
 import 'package:my_country_explorer/views/home_page/home_page_view.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (_) => AllCountriesProvider()),
+    ],
+      child: const MyApp()
+  ));
 }
 
 class MyApp extends StatelessWidget {

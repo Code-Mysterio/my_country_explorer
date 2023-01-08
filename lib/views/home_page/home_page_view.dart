@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:my_country_explorer/utils/app_colors.dart';
 import 'package:my_country_explorer/utils/app_textstyles.dart';
 import 'package:my_country_explorer/utils/components/home_page_button.dart';
+import 'package:my_country_explorer/view_models/home_page_view_model.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -11,10 +13,19 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    Provider.of<AllCountriesProvider>(context, listen: false).allCountries();
+    super.initState();
+  }
+
   TextEditingController searchBarTextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    var countriesProvider =
+        Provider.of<AllCountriesProvider>(context, listen: true);
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -74,6 +85,17 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ],
                 ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+                Expanded(child: ListView.builder(
+                    itemCount: countriesProvider.countries.length,
+                    itemBuilder: (context, index){
+                      return ListTile(
+                        onTap: (){print(countriesProvider.countries[index].name);},
+                        title: Text(countriesProvider.countries[index].name!.official.toString()),
+                      );
+                    }))
               ],
             ),
           ),
