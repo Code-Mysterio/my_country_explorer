@@ -3,6 +3,7 @@ import 'package:my_country_explorer/utils/app_colors.dart';
 import 'package:my_country_explorer/utils/app_textstyles.dart';
 import 'package:my_country_explorer/utils/components/home_page_button.dart';
 import 'package:my_country_explorer/view_models/home_page_view_model.dart';
+import 'package:my_country_explorer/views/countries_details/countries_details_view.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -88,14 +89,41 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(
                   height: 20.0,
                 ),
-                Expanded(child: ListView.builder(
-                    itemCount: countriesProvider.countries.length,
-                    itemBuilder: (context, index){
-                      return ListTile(
-                        onTap: (){print(countriesProvider.countries[index].name);},
-                        title: Text(countriesProvider.countries[index].name!.official.toString()),
-                      );
-                    }))
+                Expanded(
+                    child: ListView.builder(
+                        itemCount: countriesProvider.countries.length,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          CountriesDetailsPage(
+                                              countriesDetails:
+                                                  countriesProvider
+                                                      .countries[index])));
+                            },
+                            leading: Container(
+                              height: 35,
+                              width: 45,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                image: DecorationImage(
+                                  fit: BoxFit.fill,
+                                  image: NetworkImage(
+                                    countriesProvider
+                                        .countries[index].flags!.png
+                                        .toString(),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            title: Text(countriesProvider
+                                .countries[index].name!.official
+                                .toString()),
+                          );
+                        }))
               ],
             ),
           ),
